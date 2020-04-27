@@ -2,7 +2,7 @@ function query(id){
     var result;
     const pool=require('./GetPoolDB.js')
     const query={
-        text:"SELECT humidity FROM state WHERE id = $1",
+        text:"SELECT humidity,temp FROM state WHERE id = $1",
         values:[id],
         rowMode:'array'
     }
@@ -11,7 +11,7 @@ function query(id){
             if(err){
                 console.log(err);
             }else{
-                result=res.rows[0][0];
+                result=res.rows[0];
                 pool.end();
                 resolve(result);
             }

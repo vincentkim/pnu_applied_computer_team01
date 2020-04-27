@@ -2,9 +2,10 @@ function update(data){
     const pool = require('./GetPoolDB.js')
     const id = data[0];
     const humidity=data[1];
+    const temp=data[2];
     const query={
-        text : 'UPDATE state SET humidity = $2 WHERE id = $1',
-        values:[id,humidity]
+        text : 'UPDATE state SET humidity = $2, temp = $3 WHERE id = $1',
+        values:[id,humidity,temp]
     }
     return new Promise(function(resolve,reject){
         pool.query(query,(err,res)=>{

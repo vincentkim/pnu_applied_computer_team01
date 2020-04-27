@@ -8,7 +8,7 @@ async function b(id){
     var result=await require('./QueryDB')(id)
     console.log(result)
 }
-a(data,b);
+b(1);
 
 
 
