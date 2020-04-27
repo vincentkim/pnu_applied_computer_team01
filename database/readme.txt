@@ -14,7 +14,7 @@ Table
 
 입력 인터페이스
 --------------------------------------------------------------------------
-1. require('./InsertDB')(data:Array): Promise 객체(data) => data를 state에 입력 
+1. require('./InsertDB')(data:Array([id,humidity])): Promise 객체(data) => data를 state에 입력 
 
 검색 인터페이스
 --------------------------------------------------------------------------
