@@ -8,7 +8,7 @@ username: wen06
 DBname: postgres
 password: 1q2w3e4r^^
 
-<h2>Table
+<h2>Table</h2>
 --------------------------------------------------------------------------
 1. state(id:integer{PK},humidity:integer)
 
