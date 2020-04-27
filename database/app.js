@@ -1,7 +1,7 @@
-const data = [1,19];
+const data = [1,30];
 
 async function a(d,callback){
-    await require('./InsertDB')(d)
+    await require('./UpdateDB')(d)
     callback(d[0])
 }
 async function b(id){
@@ -9,4 +9,6 @@ async function b(id){
     console.log(result)
 }
 a(data,b);
+
+
 
