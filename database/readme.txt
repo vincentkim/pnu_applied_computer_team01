@@ -14,12 +14,22 @@ PostgreSQL
 
 Table
 ==
-1. state(id:integer{PK},humidity:integer)
+1. state(
+  id:integer{PK},
+  humidity:integer,
+  temp:integer)
 
 Insert Interface
 ==
-1. require('./InsertDB')(data:Array([id,humidity])): Promise 객체(data) => data를 state에 입력 
+1. require('./InsertDB')(data:Array([id:number,humidity:number,temp:number])): Promise 객체(data)
+=> data를 state에 입력 
 
 Query Interface
 ==
-1. require('./QueryDB')(id:number) : Promise 객체(humidity) => state에서 id에 맞는 humidity 리턴
+1. require('./QueryDB')(id:number) : Promise 객체(Array([humidity:number,temp:number]))
+=> state에서 id에 맞는 humidity,temp 리턴
+
+Update Interface
+==
+1. require('./UpdateDB')(data:Array([id:number,humidity:number,temp:number])): Promise 객체(data) 
+=> state에서 id에 맞는 humidity,temp 수정
