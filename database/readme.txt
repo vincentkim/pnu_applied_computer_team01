@@ -12,7 +12,7 @@ PostgreSQL
 
 5.password: 1q2w3e4r^^
 
-Table
+#Table
 ==
 1.user_info(
   id:integer{PK},
