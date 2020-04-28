@@ -1,14 +1,12 @@
-const data = [1,30];
+const data = ['user_info',1,'kim','1234qwer'];
+async function a(data){
+    const result=await require('./UpdateDB.js')(data)
+    console.log(result);
+}
+a(data);
 
-async function a(d,callback){
-    await require('./UpdateDB')(d)
-    callback(d[0])
-}
-async function b(id){
-    var result=await require('./QueryDB')(id)
-    console.log(result)
-}
-b(1);
+
+
 
 
 

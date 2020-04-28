@@ -1,14 +1,8 @@
-function update(data){
+async function update(data){
     const pool = require('./GetPoolDB.js')
-    const id = data[0];
-    const humidity=data[1];
-    const temp=data[2];
-    const query={
-        text : 'UPDATE state SET humidity = $2, temp = $3 WHERE id = $1',
-        values:[id,humidity,temp]
-    }
+    const text=await require('./Text/GetUpdateText.js')(data)
     return new Promise(function(resolve,reject){
-        pool.query(query,(err,res)=>{
+        pool.query(text,(err,res)=>{
             if(err){
                 console.log(err)
             }else{

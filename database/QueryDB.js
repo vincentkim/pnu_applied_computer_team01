@@ -1,9 +1,9 @@
-function query(id){
+async function query(data){
     var result;
     const pool=require('./GetPoolDB.js')
+    const text = await require('./Text/GetQueryText.js')(data)
     const query={
-        text:"SELECT humidity,temp FROM state WHERE id = $1",
-        values:[id],
+        text:text,
         rowMode:'array'
     }
     return new Promise(function(resolve,reject){
@@ -18,8 +18,8 @@ function query(id){
         })
     })
 }
-module.exports= async function(id){
-    var result=await query(id);
+module.exports= async function(data){
+    var result=await query(data);
     return new Promise(function(resolve,reject){
             resolve(result)
     });
