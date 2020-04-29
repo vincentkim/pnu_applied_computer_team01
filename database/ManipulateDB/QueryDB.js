@@ -1,7 +1,7 @@
 async function query(data){
     var result;
-    const pool=require('./GetPoolDB.js')
-    const text = await require('./Text/GetQueryText.js')(data)
+    const pool=require('../Connect/GetPoolDB.js')
+    const text = await require('../Text/GetQueryText.js')(data)
     const query={
         text:text,
         rowMode:'array'

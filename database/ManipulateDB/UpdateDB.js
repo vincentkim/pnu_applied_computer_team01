@@ -1,6 +1,6 @@
 async function update(data){
-    const pool = require('./GetPoolDB.js')
-    const text=await require('./Text/GetUpdateText.js')(data)
+    const pool = require('../Connect/GetPoolDB.js')
+    const text=await require('../Text/GetUpdateText.js')(data)
     return new Promise(function(resolve,reject){
         pool.query(text,(err,res)=>{
             if(err){

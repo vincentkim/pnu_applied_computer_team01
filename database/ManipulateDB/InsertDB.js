@@ -1,6 +1,6 @@
 async function insert(data){
-    const pool = require('./GetPoolDB.js');
-    const text = await require('./Text/GetInsertText.js')(data);
+    const pool = require('../Connect/GetPoolDB.js');
+    const text = await require('../Text/GetInsertText.js')(data);
     return new Promise(function(resolve,reject){
         pool.query(text,(err,res)=>{
             if(err){
