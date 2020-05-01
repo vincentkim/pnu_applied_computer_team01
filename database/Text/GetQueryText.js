@@ -3,10 +3,12 @@ module.exports=function(data){
     const tableName=data[0];
     switch (tableName){
         case 'state':
-        case 'user_info':
             const id=data[1];
             result='SELECT * FROM '+tableName+' WHERE id = '+id;
             break;
+        case 'user_info':
+            const email=data[2];
+            result='SELECT * FROM '+tableName+' WHERE email = '+email;
         default:
             err('There is no '+ tableName+' table');
     }

@@ -3,17 +3,18 @@ module.exports=function(data){
     const tableName=data[0];
     switch (tableName){
         case 'user_info':{
-            const id=data[1];
-            const name=data[2];
-            const password=data[3];
-            result = 'UPDATE '+tableName+' SET name=\''+name+'\',password=\''+password+'\' WHERE id ='+id;
+            const email=data[1];
+            const id=data[2];
+            const name=data[3];
+            const password=data[4];
+            result = 'UPDATE '+tableName+' SET id = '+id+ ',name=\''+name+'\',password=\''+password+'\' WHERE email ='+email;
             break;
         }
         case 'state':{
             const id=data[1];
             const humidity=data[2];
             const temp=data[3];
-            result='UPDATE '+tableName+' SET humidity='+humidity+',temp='+temp+' WHERE id='+id;
+            result='UPDATE '+tableName+' SET humidity = '+humidity+',temp='+temp+' WHERE id='+id;
             break;
         }
         default:

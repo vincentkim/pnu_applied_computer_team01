@@ -3,10 +3,11 @@ module.exports=function(data){
     const tableName=data[0];
     switch (tableName){
         case 'user_info':{
-            const id=data[1];
-            const name=data[2];
-            const password=data[3];
-            result = 'INSERT INTO '+tableName+' VALUES('+id+',\''+name+'\',\''+password+'\')'
+            const email=data[1];
+            const id=data[2];
+            const name=data[3];
+            const password=data[4];
+            result = 'INSERT INTO '+tableName+' VALUES(\''+email+'\','+id+',\''+name+'\',\''+password+'\')'
             break;
         }
         case 'state':{
