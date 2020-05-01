@@ -15,9 +15,10 @@ PostgreSQL
 #Table
 ==
 1.user_info(
-  id:integer{PK},
-  name:VARCHAR(10),
-  password:VARCHAR(15))
+  email:VARCHAR(320){PK},
+  id:integer{UNIQUE},
+  name:VARCHAR(15),
+  password:VARCHAR(30))
   
 2. state(
   id:integer{PK}{REFERENCE user_info(id)},
