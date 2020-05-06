@@ -4,5 +4,5 @@
 
 
 void Lcd_init();
-void Lcd_display(int set,int temp);
+void Lcd_display(int set,int temp,int humi);
 #endif
