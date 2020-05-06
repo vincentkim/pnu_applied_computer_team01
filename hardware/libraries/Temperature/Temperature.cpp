@@ -16,22 +16,29 @@ int Set_measure(){
   return map(Set,0,1023,0,30);
 }
 
-//DHT11 센서로부터 온도를 읽어온다.
-int Temp_measure(){
+//DHT11 센서가 2개의 값을 동시에 받아오기 때문에 String으로 받아서 분리하는 방식을 채택했다.
+String Sensor_measure(){
   int i;
-  float temp,humi;
-  if((i = dht11.read(humi,temp))==0){
-    return temp;
+  float humi, temp;
+  String str; // 온도 값과 습도값을 str에 집어넣는다.
+  if((i = dht11.read(humi,temp)) == 0 ){
+    str += (String)((int)temp);
+    str +=",";
+    str += (String)((int)humi);
+    return str;
   }
+}  
+  
+// 2개의 값이 연결된 String을 분할하여 온도값을 읽어온다.
+int Temp_measure(String str){
+  String temp = str.substring(0, str.indexOf(","));
+  return temp.toint();
 }
 
-//DHT11 센서로부터 습도를 읽어온다.
-int humi_measure(){
-  int i;
-  float temp,humi;
-  if((i = dht11.read(humi,temp))==0){
-    return humi;
-  }
+//2개의 값이 연결된 String을 분할하여 습도값을 읽어온다.
+int Humi_measure(String str){
+  String humi = str.substring( str.indexOf(",")+1, str.length());
+  return humi.toint();
 }
 
 
