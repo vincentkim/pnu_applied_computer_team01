@@ -4,7 +4,6 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
-
 //DB 연결
 const connect = require("./schema");
 connect();
@@ -25,9 +24,12 @@ app.use(bodyParser.urlencoded({ extended: false })); // req.body 사용목적
 const homeRouter = require("./routes/home");
 const arduinoRouter = require("./routes/arduino");
 const phoneRouter = require("./routes/phone");
+const adminRouter= require("./routes/admin");
 app.use("/", homeRouter);
 app.use("/arduino", arduinoRouter);
 app.use("/phone", phoneRouter);
+app.use("/admin",adminRouter);
+
 
 //Server Start
 app.listen(app.get("port"), () =>
