@@ -27,7 +27,7 @@ void loop(){
   }
   
   str = Sensor_measure();
-  Temp = Temp_measure(str);
+  Temp = Temp_measure(str); 
   Humi = humi_measure(str);
   Lcd_display(Set, Temp, Humi);
 }
