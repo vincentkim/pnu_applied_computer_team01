@@ -2,6 +2,7 @@
 #define temp_h
 
 void Temp_init();
+//가변 저항의 init.
 int Temp_measure();
 //DHT11 센서로 온도값을 받아온다.
 int humi_measere();
