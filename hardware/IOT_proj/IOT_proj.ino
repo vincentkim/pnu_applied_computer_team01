@@ -2,6 +2,7 @@
 #include "Temperature.h"
 
 int relay=52;
+int Humi, Temp;
 
 void setup(){
   Serial.begin(9600);
@@ -9,6 +10,7 @@ void setup(){
   Lcd_init();
   Temp_init();
 }
+
 void loop(){
   int Set= Set_measure();
   if(Set<20){
@@ -17,6 +19,7 @@ void loop(){
   else{
     digitalWrite(relay,LOW);
   }
-  int Temp = Temp_measure();
-  Lcd_display(Set,Temp);
+  Temp = Temp_measure();
+  Humi = humi_measure();
+  Lcd_display(Set, Temp, Humi);
 }
