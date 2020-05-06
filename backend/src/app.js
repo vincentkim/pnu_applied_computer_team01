@@ -4,12 +4,8 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
-<<<<<<< HEAD
 const cors = require("cors");
 //DB  연결
-=======
-//DB 연결
->>>>>>> remotes/origin/yeongbeen
 const connect = require("./schema");
 connect();
 
@@ -22,33 +18,21 @@ console.log(__dirname);
 app.use(express.static(path.join(__dirname, "public")));
 
 //middleware 등록
-<<<<<<< HEAD
 app.use(cors());
 
 app.use(morgan("dev")); //cli로 로그남김
 app.use(bodyParser.urlencoded({ extended: true })); // req.body 사용목적
 app.use(bodyParser.json());
-=======
-app.use(morgan("dev")); //cli로 로그남김
-app.use(bodyParser.urlencoded({ extended: false })); // req.body 사용목적
-
->>>>>>> remotes/origin/yeongbeen
 //router 설정
 const homeRouter = require("./routes/home");
 const arduinoRouter = require("./routes/arduino");
 const phoneRouter = require("./routes/phone");
-<<<<<<< HEAD
-app.use("/", homeRouter);
-app.use("/arduino", arduinoRouter);
-app.use("/phone", phoneRouter);
-=======
 const adminRouter= require("./routes/admin");
 app.use("/", homeRouter);
 app.use("/arduino", arduinoRouter);
 app.use("/phone", phoneRouter);
 app.use("/admin",adminRouter);
 
->>>>>>> remotes/origin/yeongbeen
 
 //Server Start
 app.listen(app.get("port"), () =>

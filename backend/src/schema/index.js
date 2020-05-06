@@ -30,8 +30,5 @@ module.exports = () => {
     connect();
   });
   require("./Data");
-<<<<<<< HEAD
   require("./User");
-=======
->>>>>>> remotes/origin/yeongbeen
 };

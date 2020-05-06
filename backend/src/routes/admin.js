@@ -29,6 +29,7 @@ router.post("/signUp",async(req,res,next) => {
       const email=body.id;
       const password=body.password;
       if(email=="admin@google.com"&&password=="1q2w3e4r^^"){ //임시
+        
         const datas = [{id:1,email:"abc",name:"kim",password:"123"},{id:2,email:"zxc",name:"lee",password:"qwe"},{id:3,email:"shw",name:"park",password:"1q2w3e4r"}];
         res.render("admin",{data:datas,name:"kim"});
       }else{
