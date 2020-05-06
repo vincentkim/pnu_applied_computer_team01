@@ -25,7 +25,11 @@ PostgreSQL
   humidity:integer,
   temp:integer)
 
-
+3. admin_info(
+    email:VARCHAR(320){PK},
+    name:VARCHAR(15),
+    password:VARCHAR(30))
+    
 #Query Interface
 ==
 1. require('./QueryDB')(data:Array([tableName:string,id:any])) : Promise 객체(Array([all column]))
