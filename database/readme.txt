@@ -28,7 +28,7 @@ PostgreSQL
 3. admin_info(
     email:VARCHAR(320){PK},
     name:VARCHAR(15),
-    password:VARCHAR(30))
+    password:VARCHAR(100))
     
 #Query Interface
 ==
