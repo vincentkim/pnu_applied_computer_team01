@@ -30,7 +30,7 @@ PostgreSQL
     name:VARCHAR(15),
     password:VARCHAR(100))
 
-4. session(): 외부 모듈 [table.sql](https://github.com/voxpelli/node-connect-pg-simple/blob/HEAD/table.sql)
+4. admin_session: 참조 [table.sql](https://github.com/voxpelli/node-connect-pg-simple/blob/HEAD/table.sql)
 
 #Query Interface
 ==
