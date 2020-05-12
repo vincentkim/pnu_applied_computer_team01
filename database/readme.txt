@@ -29,7 +29,9 @@ PostgreSQL
     email:VARCHAR(320){PK},
     name:VARCHAR(15),
     password:VARCHAR(100))
-    
+
+4. session(): 외부 모듈 [table.sql][]
+[table.sql]:https://github.com/voxpelli/node-connect-pg-simple/blob/HEAD/table.sql
 #Query Interface
 ==
 1. require('./QueryDB')(data:Array([tableName:string,id:any])) : Promise 객체(Array([all column]))
