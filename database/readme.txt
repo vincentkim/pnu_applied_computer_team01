@@ -16,21 +16,25 @@ PostgreSQL
 ==
 1.user_info(
   email:VARCHAR(320){PK},
-  id:integer{UNIQUE},
   name:VARCHAR(15),
-  password:VARCHAR(30))
-  
-2. state(
-  id:integer{PK}{REFERENCE user_info(id)},
-  humidity:integer,
-  temp:integer)
-
-3. admin_info(
+  password:VARCHAR(100),
+  createdat:date
+ )
+2. data(
+  id:VARCHAR(400){PK}{REFERENCE arduino(id)},
+  humidity:VARCHAR(10),default '10'
+  temp:VARCHAR(10) default '10'
+  createdat:date
+ )
+3. arduino(
+  id:VARCHAR(400) PRIMARY KEY
+)
+4. admin_info(
     email:VARCHAR(320){PK},
     name:VARCHAR(15),
     password:VARCHAR(100))
 
-4. admin_session: 참조 [table.sql](https://github.com/voxpelli/node-connect-pg-simple/blob/HEAD/table.sql)
+5. admin_session: 참조 [table.sql](https://github.com/voxpelli/node-connect-pg-simple/blob/HEAD/table.sql)
 
 #Query Interface
 ==
