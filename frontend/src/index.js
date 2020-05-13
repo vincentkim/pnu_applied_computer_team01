@@ -10,12 +10,18 @@ import {
   Switch,
   withRouter,
 } from "react-router-dom";
+import RegisterRoute from "./routes/RegisterRoute";
+import PostArdData from "./routes/PostArdData";
+import UserList from "./routes/UserList";
 
 const Root = (props) => {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={App} />
+        <Route path={["/", "/login"]} exact component={App} />
+        <Route path="/register" component={RegisterRoute} />
+        <Route path="/data" component={PostArdData} />
+        <Route path="/users" component={UserList} />
         {/* <Route path='/' component={Login} />
         <Route path='/' component={Register} /> */}
       </Switch>
@@ -25,7 +31,7 @@ const Root = (props) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root />
   </React.StrictMode>,
   document.getElementById("root")
 );

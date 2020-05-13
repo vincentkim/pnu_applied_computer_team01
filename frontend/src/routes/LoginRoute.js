@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { Form, Grid, Button, Checkbox, Segment } from "semantic-ui-react";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import ArduinoPost from "./Pages/ArduinoPost";
-import Dummy from "./Pages/Dummy";
-import SidePanel from "./Pages/SidePanel";
+import React from "react";
+import { Grid } from "semantic-ui-react";
+import Login from "../Pages/Login";
+import SidePanel from "../Pages/SidePanel";
 
-function App() {
+const LoginRoute = (props) => {
   return (
     <>
       <div className="app">
@@ -32,6 +27,5 @@ function App() {
       </div>
     </>
   );
-}
-
-export default App;
+};
+export default LoginRoute;
