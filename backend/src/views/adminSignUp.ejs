@@ -1,52 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/adminSignUp.css" />
-        <title>Admin SignUp Page</title>
-    </head>
-    <body>
-        <script type="text/javascript">
-            function sameCheck(){
-                var pw=document.getElementById("password").value;
-                var pwCheck=document.getElementById("passwordCheck").value;
-                var notSame=document.getElementById("notSame");
-                if(pw==""||pwCheck=="") return;
-                if(pw==pwCheck){
-                    notSame.style.display="none";
-                }else{
-                    notSame.style.display="inline-block";
-                }
-            }
-            
-        </script>
-        <div class="signUpBlock">
-            <p style="font-size: 2em;">관리자 가입</p>
-            <form action="/admin/signUp" method="post">
-                <p>
-                    <strong>아이디</strong>
-                    <input type="email" id="id" placeholder="your_email@gmail.com">
-                </p>
-                <p class="pw">
-                    <strong>비밀번호</strong> 
-                    <input type="password" id="password" onchange="sameCheck()">
-                    <i class="lookPw"></i>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/adminSignUp.css" />
+    <title>Admin SignUp Page</title>
+</head>
 
-                </p>
-                <p class="pw">
-                    <strong>비밀번호 확인</strong>
-                    <input type="password" id="passwordCheck" onchange="sameCheck()">
-                    <span id="notSame" style="display:none;color: #d92742">비밀번호가 일치하지 않습니다.</span>
-                </p>
-                <p>
-                    <strong>이름</strong>
-                    <input type="text" id="name">
-                </p>
-                <p>
-                    <input type="submit" value="관리자 가입">
-                </p>
-            </form>
+<body class="align">
+    <script language=javascript>
+        function sameCheck(){
+            var pw=document.getElementsByName("password")[0].value;
+            var pwCheck=document.getElementsByName("passwordCheck")[0].value;
+            var notSame=document.getElementById("notSame");
+            if(pw==""||pwCheck=="") return;
+            if(pw==pwCheck){
+                notSame.style.display="none";
+            }else{
+                notSame.style.display="inline-block";
+            }
+        }
+    </script>
+  <div class="site__container">
+
+    <div class="grid__container">
+        
+      <form action="/admin/signUP" method="post" class="form form--signUp">
+        <div class="form__header">
+            <h1>Admin Sign UP</h1>
         </div>
-    </body>
+        <div class="form__field">
+          <label class="fontawesome-user" for="signUp__username"><span class="hidden">Username</span></label>
+          <input name="id" id="signUp__username" type="email" class="form__input" placeholder="your_email@gmail.com" required >
+        </div>
+
+        <div class="form__field">
+          <label class="fontawesome-lock" for="signUp__password"><span class="hidden">Password</span></label>
+          <input name="password" id="signUp__password" type="password" class="form__input" placeholder="Password" required>
+        </div>
+        <div class="form__field">
+            <label class="fontawesome-lock" for="signUp__passwordCheck"><span class="hidden">PasswordCheck</span></label>
+            <input name="passwordCheck" id="signUp__passwordCheck" type="password" class="form__input" placeholder="Password check" required>
+            <span id="notSame" style="display:none;color: #d92742">Passwords do not match!</span>
+        </div>
+        <div class="form__field">
+            <label class="fontawesome-lock" for="signUp__nickname"><span class="hidden">name</span></label>
+            <input name="name" id="signUp__nickname" type="text" class="form__input" placeholder="Nickname" required>
+          </div>
+        <div class="form__field">
+          <input type="submit" value="Sign UP">
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+</body>
 </html>
