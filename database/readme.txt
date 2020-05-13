@@ -16,6 +16,7 @@ PostgreSQL
 ==
 1.user_info(
   email:VARCHAR(320){PK},
+  arduinos:VARCHAR(400)[]{REFERENCE arduino.id},
   name:VARCHAR(15),
   password:VARCHAR(100),
   createdat:date
