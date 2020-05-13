@@ -16,13 +16,13 @@ PostgreSQL
 ==
 1.user_info(
   email:VARCHAR(320){PK},
-  arduinos:VARCHAR(400)[]{REFERENCE arduino.id},
+  arduinos:VARCHAR(400)[],
   name:VARCHAR(15),
   password:VARCHAR(100),
   createdat:date
  )
 2. data(
-  id:VARCHAR(400){PK}{REFERENCE arduino(id)},
+  id:VARCHAR(400){PK}{REFERENCES arduino(id)},
   humidity:VARCHAR(10),default '10'
   temp:VARCHAR(10) default '10'
   createdat:date
