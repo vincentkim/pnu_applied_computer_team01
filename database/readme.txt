@@ -19,13 +19,13 @@ PostgreSQL
   arduinos:VARCHAR(400)[],
   name:VARCHAR(15),
   password:VARCHAR(100),
-  createdat:date
+  createdat:timestamp
  )
 2. data(
   id:VARCHAR(400){PK}{REFERENCES arduino(id)},
   humidity:VARCHAR(10),default '10'
   temp:VARCHAR(10) default '10'
-  createdat:date
+  createdat:timestamp
  )
 3. arduino(
   id:VARCHAR(400) PRIMARY KEY
