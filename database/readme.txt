@@ -22,13 +22,13 @@ PostgreSQL
   createdat:timestamp
  )
 2. data(
-  id:VARCHAR(400){PK}{REFERENCES arduino(id)},
+  id:VARCHAR(400){REFERENCES arduino(id)},
   humidity:VARCHAR(10),default '10'
   temp:VARCHAR(10) default '10'
   createdat:timestamp
  )
 3. arduino(
-  id:VARCHAR(400) PRIMARY KEY
+  id:VARCHAR(400){PK}
 )
 4. admin_info(
     email:VARCHAR(320){PK},
