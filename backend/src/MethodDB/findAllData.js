@@ -1,12 +1,12 @@
 const getAll=require('./InterfaceDB/getAll');
 const refine=require('./InterfaceDB/refineTimeFormat');
-//data table의 모든 tuple 객체의 배열 리턴, 매개변수 id가 존재한다면 id에 맞는 tuple들만 찾음
-module.exports=async function(id){
+//data table의 모든 tuple 객체의 배열 리턴, 매개변수 data가 존재한다면 data.arduino_id에 맞는 tuple들만 찾음
+module.exports=async function(data){
     var queryText={};
-    if(id){
+    if(data){
         queryText={
             text:"SELECT * FROM data WHERE id = $1",
-            values:[id]
+            values:[data.arduino_id]
         }
     }else{
         queryText={

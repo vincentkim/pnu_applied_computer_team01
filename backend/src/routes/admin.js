@@ -67,7 +67,11 @@ router.post("/signUp",async(req,res,next) => {
 });
 
   router.get("/login", async (req, res, next) => {
-    res.render("adminLogin",{err:null,saveID:req.cookies.savedID,saveCheck:req.cookies.savedCheck});
+    if(req.session.isLogined){
+      res.redirect("/admin");
+    }else{
+      res.render("adminLogin",{err:null,saveID:req.cookies.savedID,saveCheck:req.cookies.savedCheck});
+    }
   });
 
   router.post("/login",async(req,res,next)=>{

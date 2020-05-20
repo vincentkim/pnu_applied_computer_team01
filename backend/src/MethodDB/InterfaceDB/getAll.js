@@ -11,7 +11,7 @@ async function query(queryText){
         })
     })
 }
-//db로부터 조건에 맞는 모든 tuple을 배열 형태로 리턴, 매개변수로 string 형태로 query text 필요
+//db로부터 조건에 맞는 모든 tuple을 배열 형태로 리턴, 매개변수로 string 형태 또는 query 형태 필요
 module.exports=async function(queryText){
     var result=await query(queryText);
     return new Promise(function(resolve,reject){

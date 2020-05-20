@@ -12,6 +12,10 @@ module.exports=function(data){
             const email=data.email;
             result="SELECT * FROM "+tableName+" WHERE email = \'"+email+"\'";
             break;
+        case 'arduino':
+            const arduinoId=data.id;
+            result="SELECT * FROM "+tableName+" WHERE id = \'"+arduinoId+"\'";
+            break;
         default:
             console.log('There is no '+ tableName+' table');
     }

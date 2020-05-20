@@ -92,17 +92,12 @@ a {
     background-color: gray;;
 }
 
-.table_head_1{
+.table_head{
     
     background-color: violet;
     font-style: italic;
     height:10px;
 
-}
-.table_head_2{
-    background-color: violet;
-    font-style: italic;
-    height:10px;
 }
 
 .table_row{

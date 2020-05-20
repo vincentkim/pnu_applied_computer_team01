@@ -6,18 +6,19 @@ async function insert(data){
         client.query(insertText,(err,res)=>{
             if(err){
                 console.log(err)
+                resolve(false);
             }else{
                 console.log("data is inserted successfully.")
-                resolve(data);
+                resolve(true);
             }
         })
     })
 }
 //table에 data를 insert, 매개변수는 json 형태로 테이블이름(tableName)과 data의 정보 필요
 module.exports=async function(data){
-    await insert(data);
+    const result=await insert(data);
     return new Promise(function(resolve,reject){
-        resolve(data)
+        resolve(result)
     });
 }
 

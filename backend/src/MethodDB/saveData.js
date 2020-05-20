@@ -3,6 +3,7 @@ const insert=require("../ManipulateDB/insertDB");
 module.exports=async function(data){
     var queryData={...data};
     queryData.tableName='data';
+    queryData.id=data.arduino_id;
     const result=await insert(queryData);
     return new Promise(function(resolve,reject){
         resolve(result)
