@@ -62,7 +62,7 @@
             cells[1].innerHTML=email;
             cells[2].innerHTML=name;
             cells[3].innerHTML=password;
-            cells[4].innerHTML="<input type='button' value='제거' onclick='deleteUser(this)'>"
+            cells[4].innerHTML="<input type='button' value='Delete' onclick='deleteUser(this)'>"
         }
         function deleteUser(object){
             var user_row=object.parentNode.parentNode;
@@ -78,70 +78,88 @@
         }
     </script>
 
-
+    
     <div class="header">
-      <h1>관리자 페이지</h1> 
-        <div style="font-size: 20px;"><%=name%>님 반갑습니다. 
-        <form action="/admin/logout" method="post">
-            <input type="submit" value="로그아웃">
-        </form>
+      <h1 class="page_header">Admin Page</h1> 
+        <div style="font-size: 20px;">Welcome,<%=name%> 
+        <p class="logout"><a href="/admin/logout">Logout</a> <span class="fontawesome-remove-sign"></span></p>
         </div>
     </div>
     <hr>
+    
     <div>
+        
         <table border="5", class="connect">
             <tr>
-                <td colspan="5" bgcolor="grey"><strong>아두이노 - 사용자 연결</strong></td>
+                <td class="table_title" colspan="5"><strong>Arduino - User Connection</strong></td>
             </tr>
-           <th width="25%">Arduino</th>
-           <th width="25%">이메일</th>
-           <th width="15%">이름</th>
-           <th width="20%">비밀번호</th>
-           <th width="15%"><input type="button" value="+" onclick="rowAdd()"></th>
-           <tbody id="userTable">
+            <colgroup>
+                <col class="arduino"/>
+                <col class="email"/>
+                <col class="name"/>
+                <col class="password"/>
+                <col class="add_button"/>
+            </colgroup>
+            
+           <th class="table_head_1" >Arduino</th>
+           <th class="table_head_1" >Email</th>
+           <th class="table_head_1" >Name</th>
+           <th class="table_head_1" >Password</th>
+           <th class="table_head_1" ><input type="button" value="+" onclick="rowAdd()"></th>
+           <tbody id="userTable" class="table_body">
            <%for(let i=0;i<data.length;i++){%>
-           <tr>
-               <td>
+           <tr class="table_row">
+               <td class="table_data">
                     <%=data[i].id%>
                </td>
-               <td>
+               <td class="table_data">
                     <%=data[i].email%>
                </td>
-               <td>
+               <td class="table_data">
                     <%=data[i].name%>
                </td>
-               <td>
+               <td class="table_data">
                     <%=data[i].password%>
                </td>
-               <td>
-                   <input type="button" value="제거" onclick="deleteUser(this)">
+               <td class="table_data">
+                   <input type="button" value="Delete" onclick="deleteUser(this)">
                </td>
            </tr>
            <%}%> 
-            </tbody>   
+            </tbody>
         </table>
     </div>
     <hr width="1500px">
     <div>
         <table border="5", class="state">
             <tr>
-                <td colspan="3" bgcolor="grey"><strong>아두이노 상태</strong></td>
+                <td class="table_title" colspan="3"><strong>State Data</strong></td>
             </tr>
-           <th>Arduino</th>
-           <th>온도</th>
-           <th>습도</th>
-           <tr>
-               <td>
+            <colgroup>
+                <col class="arduino_id"/>
+                <col class="humidity"/>
+                <col class="temp"/>
+            </colgroup>
+           <th class="table_head_2" >Arduino Id</th>
+           <th class="table_head_2" >Humidity</th>
+           <th class="table_head_2" >Temperature</th>
+           <tbody class="table_body">
+           <tr class="table_row">
+               <td class="table_data">
                    1
                </td>
-               <td>
+               <td class="table_data">
                    30
                </td>
-               <td>
+               <td class="table_data">
                    20
                </td>
-           </tr>    
+           </tr>
+           
+            </tbody>    
         </table>
     </div>
   </body>
 </html>
+
+
