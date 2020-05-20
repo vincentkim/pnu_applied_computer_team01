@@ -9,17 +9,7 @@
 
 <body class="align">
     <script language=javascript>
-        function sameCheck(){
-            var pw=document.getElementsByName("password")[0].value;
-            var pwCheck=document.getElementsByName("passwordCheck")[0].value;
-            var notSame=document.getElementById("notSame");
-            if(pw==""||pwCheck=="") return;
-            if(pw==pwCheck){
-                notSame.style.display="none";
-            }else{
-                notSame.style.display="inline-block";
-            }
-        }
+        
     </script>
   <div class="site__container">
 
@@ -39,14 +29,17 @@
           <input name="password" id="signUp__password" type="password" class="form__input" placeholder="Password" required>
         </div>
         <div class="form__field">
-            <label class="fontawesome-lock" for="signUp__passwordCheck"><span class="hidden">PasswordCheck</span></label>
+            <label class="fontawesome-ok-sign" for="signUp__passwordCheck"><span class="hidden">PasswordCheck</span></label>
             <input name="passwordCheck" id="signUp__passwordCheck" type="password" class="form__input" placeholder="Password check" required>
-            <span id="notSame" style="display:none;color: #d92742">Passwords do not match!</span>
         </div>
         <div class="form__field">
-            <label class="fontawesome-lock" for="signUp__nickname"><span class="hidden">name</span></label>
+            <label class="fontawesome-github-alt" for="signUp__nickname"><span class="hidden">nickname</span></label>
             <input name="name" id="signUp__nickname" type="text" class="form__input" placeholder="Nickname" required>
-          </div>
+        </div>
+        <div class="form__field">
+            <label class="fontawesome-star" for="signUp__adminCode"><span class="hidden">adminCode</span></label>
+            <input name="adminCode" id="signUp__adminCode" type="password" class="form__input" placeholder="Insert Our Admin code" required>
+        </div>
         <div class="form__field">
           <input type="submit" value="Sign UP">
         </div>

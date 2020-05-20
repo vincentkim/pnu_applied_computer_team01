@@ -1,4 +1,3 @@
-
 const { Client } = require('pg');
 
 const client = new Client({
@@ -9,6 +8,7 @@ const client = new Client({
     port : 5432,
 });
 client.connect();
+//db client 리턴
 module.exports=client;
 
 

@@ -1,9 +1,9 @@
 const express = require("express");
 const Data = require("../schema/Data");
 const router = express.Router();
-const insert=require("../ManipulateDB/InsertDB");
-const query=require("../ManipulateDB/QueryDB");
-const update=require("../ManipulateDB/UpdateDB");
+const insert=require("../ManipulateDB/insertDB");
+const query=require("../ManipulateDB/queryDB");
+const update=require("../ManipulateDB/updateDB");
 const bcrypt=require('bcryptjs');  //모듈 설치
 const url=require('url');
 const server=require('server');
@@ -32,13 +32,18 @@ router.get("/signUp", async (req, res, next) => {
 
 router.post("/signUp",async(req,res,next) => {
     let body=req.body;
+    const adminCodeNow='1111'; //임시적 admin code
     const email= body.id;
     const name=body.name;
     const password=body.password;
     const passwordCheck=body.passwordCheck;
+    const adminCode=body.adminCode;
     var hashedPassword=null;
     if(password!=passwordCheck){
       res.send("<script>alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');window.location.href='/admin/signUp'</script>");
+    }
+    if(adminCode!=adminCodeNow){
+      res.send("<script>alert('Admin code가 일치하지 않습니다.');window.location.href='/admin/signUp'</script>");
     }
     const queryData={
       tableName:'admin_info',
@@ -92,11 +97,11 @@ router.post("/signUp",async(req,res,next) => {
           if(bcrypt.compareSync(password,queryPassword)){
             if(isSaveID){
               res.cookie('savedID',email,{  //쿠키 savedId에 id 저장
-                expires: new Date(Date.now() + 900000),
+                expires: new Date(Date.now() + 1000*60*60*24*90), //90일 후 만료
                 httpOnly: true
               });
               res.cookie('savedCheck',true,{  //쿠키 saveCheck에 check 상태 저장
-                expires: new Date(Date.now() + 900000),
+                expires: new Date(Date.now() + 1000*60*60*24*90),
                 httpOnly: true
               });
             }else{
@@ -120,6 +125,7 @@ router.post("/signUp",async(req,res,next) => {
         }
       }
   });
+  /*
   router.get("/logout",async(req,res,next)=>{
     res.redirect(url.format({
       pathname:"/admin/login",
@@ -130,8 +136,8 @@ router.post("/signUp",async(req,res,next) => {
       }    
     })) 
   });
-
-  router.post("/logout",async(req,res,next)=>{
+  */
+  router.get("/logout",async(req,res,next)=>{
     if(req.session.isLogined){
       req.session.destroy(
         function(err){

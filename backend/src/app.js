@@ -10,7 +10,7 @@ const connect = require("./schema");
 const cookieParser = require('cookie-parser'); //모듈설치
 const session=require('express-session'); //모듈 설치
 const pgSession=require('connect-pg-simple')(session); //모듈 설치
-const pgPool=require("./Connect/GetPoolDB"); //connection pool 
+const pgPool=require("./Connect/getPoolDB"); //connection pool 
 
 connect();
 
@@ -38,7 +38,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false,
-  cookie: { expires:1000*60*10 } //10분
+  cookie: { maxAge:30*24*60*60*1000 } //30 days
 }));
 
 //router 설정

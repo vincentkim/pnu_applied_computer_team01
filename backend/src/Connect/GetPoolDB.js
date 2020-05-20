@@ -6,4 +6,5 @@ const pool = new Pool({
     password : '1q2w3e4r^^',
     port : 5432,
 })
+//db pool 리턴
 module.exports=pool;
