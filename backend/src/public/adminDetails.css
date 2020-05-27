@@ -1,0 +1,72 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+@import url(http://weloveiconfonts.com/api/?family=iconicfill);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+[class*="iconicfill-"]:before{
+    font-family: 'IconicFill',sans-serif;
+}
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    height: 100%;
+  }
+  
+  body {
+    background-color: #2c3338;
+    color: white;
+    font: 400 0.875rem/1.5 "Open Sans", sans-serif;
+    margin: 0;
+    min-height: 100%;
+  }
+  table{
+      width:100%;
+      text-align: center;
+  }
+  th,td{
+      border:1px solid #2c3338;
+      border-collapse: collapse;
+  }
+.header{
+    font-size: 30px;
+    padding-top: 25px;
+    padding-left: 25px;
+    justify-content: space-between;
+}
+.iconicfill-arrow-left{
+    font-size:40px;
+}
+.table_section{
+    background-color: white;
+    color: #2c3338;
+    border:5px outset plum;
+    width: 50%;
+    height: 450px;
+    margin-bottom: 30px;
+    overflow:auto;
+}
+.table_head{
+    background-color: rgb(145, 144, 223);
+    font-style: italic;
+    height:10px;
+}
+.renewal_time{
+    width:50%;
+}
+.temp{
+    width:25%;
+}
+.humidity{
+    width:25%;
+}
+.graph_section{
+    background-color: white;
+    color: #2c3338;
+    border:5px outset plum;
+    width:75%;
+    height:450px;
+
+}

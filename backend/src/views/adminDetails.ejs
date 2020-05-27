@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/adminDetails.css" />
+    <title>Arduino Details</title>
+  </head>
+  <body>
+        <div class="header">
+            <span class="iconicfill-arrow-left" onclick="location.href='/admin'" style="cursor:pointer"></span>
+            Arduino Id: <%=data[0].id%>
+        </div>
+        <hr>
+        <center>
+            <div class="table_section">
+                <table>
+                    <colgroup>
+                        <col class="renewal_time">
+                        <col class="temp">
+                        <col class="humidity">
+                    </colgroup>
+                    <th class="table_head">Created Time</th>
+                    <th class="table_head">Temperature</th>
+                    <th class="table_head">Humidity</th>
+                    <tbody>
+                        <%for(let i=data.length-1;i>=0;i--){%>
+                            <tr class="table_row">
+                                <td class="table_data">
+                                    <%=data[i].createdat%>
+                                </td>
+                                <td class="table_data">
+                                    <%=data[i].temp%>
+                                </td>
+                                <td class="table_data">
+                                    <%=data[i].humidity%>
+                                </td>
+                            </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <hr width="1500px">
+            <div class="graph_section">
+                
+            </div>
+        </center>    
+  </body>
+</html>
+
+
