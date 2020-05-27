@@ -57,7 +57,7 @@ a {
 .state{
     background-color: inherit;
     text-align: center;
-    width:1200px;
+    width:1700px;
     table-layout: fixed;
     margin:0 auto;
     margin-top:3%;
@@ -80,13 +80,25 @@ a {
     width:10%;
 }
 .arduino_id{
-    width:40%;
+    width:25%;
 }
 .humidity{
-    width:30%;
+    width:10%;
 }
 .temp{
-    width:30%;
+    width:10%;
+}
+.renewal_time{
+    width:15%;
+}
+.on_off{
+    width:10%;
+}
+.current_state{
+    width:10%;
+}
+.details{
+    width:20%;
 }
 .table_title{
     background-color: gray;;
@@ -106,6 +118,12 @@ a {
 .table_data{
     height:15px;
 }
-.table_span{
-    background-color: lightblue;
+.state_dot{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
 }
+.details:focus, .details:hover {
+    text-decoration: underline;
+  }

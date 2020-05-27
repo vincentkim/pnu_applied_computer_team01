@@ -1,3 +1,10 @@
+function getQuotationText(textArray){
+    var result='';
+    for(let i=0;i<textArray.length;i++){
+        result+='\''+textArray[i]+'\',';
+    }
+    return result.slice(0,-1);
+}
 //updateDB.js에서 필요한 query text 리턴, 매개변수는 updateDB.js와 동일
 module.exports=function(data){
     var result;
@@ -8,7 +15,14 @@ module.exports=function(data){
             const arduinos=data.arduinos;
             const name=data.name;
             const password=data.password;
-            result = 'UPDATE '+tableName+' SET arduinos = '+arduinos+ ',name=\''+name+'\',password=\''+password+'\' WHERE email = \''+email+'\'';
+            var arduinosToText;
+            if(arduinos.length>0){
+                arduinosToText=getQuotationText(arduinos);
+                arduinosToText='ARRAY['+arduinosToText+']'
+            }else{
+                arduinosToText=null
+            }
+            result = 'UPDATE '+tableName+' SET arduinos = '+arduinosToText+ ',name=\''+name+'\',password=\''+password+'\' WHERE email = \''+email+'\'';
             break;
         }
         case 'data':{

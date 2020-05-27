@@ -23,14 +23,14 @@ module.exports=function(data){
             }else{
                 arduinosToText=null
             }
-            result = result+' VALUES(\''+email+'\','+arduinosToText+',\''+name+'\',\''+password+'\',CURRENT_TIMESTAMP(0)+interval \'17hour\')'
+            result = result+' VALUES(\''+email+'\','+arduinosToText+',\''+name+'\',\''+password+'\',CURRENT_TIMESTAMP(0)+interval \'18hour\')'
             break;
         }
         case 'data':{
             const id=data.id;
             const humidity=data.humidity;
             const temp=data.temp;
-            result=result +' VALUES(\''+id+'\',\''+humidity+'\',\''+temp+'\',CURRENT_TIMESTAMP(0)+interval \'17hour\')';
+            result=result +' VALUES(\''+id+'\',\''+humidity+'\',\''+temp+'\',CURRENT_TIMESTAMP(0)+interval \'18hour\')';
             break;
         }
         case 'admin_info':{

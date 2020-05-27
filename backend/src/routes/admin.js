@@ -7,13 +7,32 @@ const update=require("../ManipulateDB/updateDB");
 const bcrypt=require('bcryptjs');  //모듈 설치
 const url=require('url');
 const server=require('server');
+const findAllUser=require('../MethodDB/findAllUser');
+const findAllNewData=require('../MethodDB/findAllNewData');
+const findAllData=require('../MethodDB/findAllData');
+const deregisterArduino=require('../MethodDB/deregisterArduino');
 
 router.get("/", async (req, res, next) => {
   //const datas = await Data.find({});
   
   if(req.session.isLogined){
-      const datas = [{id:1,email:"abc",name:"kim",password:"123"},{id:2,email:"zxc",name:"lee",password:"qwe"},{id:3,email:"shw",name:"park",password:"1q2w3e4r"}];
-      res.render("admin",{data:datas,name:req.session.name});
+      const users = await findAllUser();
+      var userData =[];
+      for(let i=0;i<users.length;i++){
+        var user=users[i];
+        if(user.arduinos){
+          for(let j=0;j<user.arduinos.length;j++){
+            var userPerArduino = {...user};
+            userPerArduino.arduino=user.arduinos[j];
+            userData.push(userPerArduino);  //arduino 하나씩 개별적으로 유저 정보를 저장
+          }
+        }
+      }
+      userData.sort(function(a,b){
+        return a.arduino<b.arduino?-1:a.arduino>b.arduino?1:0;
+      });
+      const stateData= await findAllNewData();
+      res.render("admin",{userData:userData,stateData:stateData,name:req.session.name});
   }else{
     res.redirect(url.format({
     pathname:"/admin/login",
@@ -170,6 +189,31 @@ router.post("/signUp",async(req,res,next) => {
           }
         }));
     }
+  });
+  router.get("/details",async(req,res,next)=>{
+      var urlParse=url.parse(req.url,true);
+      var queryString=urlParse.query;
+      const arduinoData=await findAllData({arduino_id:String(queryString.id)});
+      res.render("adminDetails",{data:arduinoData});
+  });
+  
+  router.get("/deregister",async(req,res,next)=>{
+    if(req.session.isLogined){
+      var urlParse=url.parse(req.url,true);
+      var queryString=urlParse.query;
+      var user_id=queryString.user_id;
+      var arduino_id=String(queryString.arduino_id);
+      result = await deregisterArduino(user_id,arduino_id);
+      res.redirect("/admin");
+    }else{
+      res.redirect(url.format({
+        pathname:"/admin/login",
+        query:{
+          err:null,
+          saveID:req.cookies.savedID,
+          saveCheck:req.cookies.savedCheck
+        }
+      }))
+    }
   })
-
 module.exports = router;

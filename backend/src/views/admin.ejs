@@ -8,7 +8,8 @@
     <title>Admin Page</title>
   </head>
   <body>
-    <script type="text/javascript"> 
+    <script type="text/javascript">
+
     //뒤로 가기로 못 오게 막음(임시)-사파리에서 가능
         function noBack(){window.history.forward();}
         noBack();
@@ -66,15 +67,21 @@
         }
         function deleteUser(object){
             var user_row=object.parentNode.parentNode;
-            const user_id=user_row.cells[0].innerHTML.trim();
+            var arduino_id=user_row.cells[0].innerHTML.trim();
+            var user_id=user_row.cells[1].innerHTML.trim();
             var user_body=user_row.parentNode;
             if(confirm("정말로 삭제하시겠습니까?")){
-                deleteUserFromDB(user_id);
-                user_body.deleteRow(user_row.rowIndex-2);
+                deregisterArduinoFromUser(user_id,arduino_id);
             }
         }
-        function deleteUserFromDB(id){
-            //구현해야함
+        function deregisterArduinoFromUser(user_id,arduino_id){
+            var user_id=user_id.replaceAll("@","%40");
+            location.href="/admin/deregister?user_id="+user_id+"&arduino_id="+arduino_id;
+        }
+        function goToDetails(object){
+            var data_row=object.parentNode.parentNode;
+            const arduino_id=data_row.cells[0].innerHTML.trim();
+            location.href="/admin/details?id="+arduino_id;
         }
     </script>
 
@@ -107,19 +114,19 @@
            <th class="table_head" >Password</th>
            <th class="table_head" ><input type="button" value="+" onclick="rowAdd()"></th>
            <tbody id="userTable" class="table_body">
-           <%for(let i=0;i<data.length;i++){%>
+           <%for(let i=0;i<userData.length;i++){%>
            <tr class="table_row">
                <td class="table_data">
-                    <%=data[i].id%>
+                    <%=userData[i].arduino%>
                </td>
                <td class="table_data">
-                    <%=data[i].email%>
+                    <%=userData[i].email%>
                </td>
                <td class="table_data">
-                    <%=data[i].name%>
+                    <%=userData[i].name%>
                </td>
                <td class="table_data">
-                    <%=data[i].password%>
+                    <%=userData[i].password%>
                </td>
                <td class="table_data">
                    <input type="button" value="Delete" onclick="deleteUser(this)">
@@ -133,29 +140,87 @@
     <div>
         <table border="5", class="state">
             <tr>
-                <td class="table_title" colspan="3"><strong>State Data</strong></td>
+                <td class="table_title" colspan="7"><strong>Arduino Data</strong></td>
             </tr>
             <colgroup>
                 <col class="arduino_id"/>
                 <col class="humidity"/>
                 <col class="temp"/>
+                <col class="renewal_time"/>
+                <col class="on_off"/>
+                <col class="current_state"/>
+                <col class="details"/>
             </colgroup>
            <th class="table_head" >Arduino Id</th>
            <th class="table_head" >Humidity</th>
            <th class="table_head" >Temperature</th>
+           <th class="table_head" >Renewal time</th>
+           <th class="table_head" >ON/OFF</th>
+           <th class="table_head" >Current state</th>
+           <th class="table_head" >Details</th>
            <tbody class="table_body">
+            <%for(let i=0;i<stateData.length;i++){%>
            <tr class="table_row">
                <td class="table_data">
-                   1
+                   <%=stateData[i].id%>
                </td>
                <td class="table_data">
-                   30
+                   <%=stateData[i].humidity%>
                </td>
                <td class="table_data">
-                   20
+                    <%=stateData[i].temp%>
                </td>
+
+               <td class="table_data">
+                    <%=stateData[i].createdat%>
+               </td>
+               <td class="table_data">
+                <% 
+                    var renewal_time=Date.parse(stateData[i].createdat);
+                    var now = new Date();
+                    var gap=now.getTime()-renewal_time;
+                    var min_gap=gap/1000/60;
+                    var isOff=(min_gap>=10);
+                    if(isOff){
+                %>
+                        Off
+                <%
+                    }else{
+                %>
+                    On        
+                <%
+                    }
+                %>
+               </td>
+               <td class="table_data">
+                    <span class="state_dot" style="background-color:
+                        <%
+                            if(isOff){
+                        %>
+                            black" title="정지"
+                        <%
+                            }else if(stateData[i].temp>=60){
+                        %>
+                            red" title="위험"
+                        <%
+                            }else if(stateData[i].temp>=40){
+                        %>
+                            yellow" title="경고"
+                        <%
+                            }else{
+                        %>
+                            green" title="정상"
+                        <%
+                            }
+                        %>
+                            >
+                    </span>
+               </td>
+               <td class="table_data">
+                    <span class="details" onclick="goToDetails(this)" style="cursor:pointer" >details</span>
+                </td>
            </tr>
-           
+           <%}%>
             </tbody>    
         </table>
     </div>
