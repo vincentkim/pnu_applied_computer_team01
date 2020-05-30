@@ -1,5 +1,4 @@
 const express = require("express");
-const Data = require("../schema/Data");
 const router = express.Router();
 const insert=require("../ManipulateDB/insertDB");
 const query=require("../ManipulateDB/queryDB");
@@ -11,9 +10,11 @@ const findAllUser=require('../MethodDB/findAllUser');
 const findAllNewData=require('../MethodDB/findAllNewData');
 const findAllData=require('../MethodDB/findAllData');
 const deregisterArduino=require('../MethodDB/deregisterArduino');
+const findAllUnregisteredArduino=require('../MethodDB/findAllUnregisteredArduino');
+const registerArduino=require('../MethodDB/registerArduino');
+const saveUser=require('../MethodDB/saveUser');
 
 router.get("/", async (req, res, next) => {
-  //const datas = await Data.find({});
   
   if(req.session.isLogined){
       const users = await findAllUser();
@@ -32,7 +33,8 @@ router.get("/", async (req, res, next) => {
         return a.arduino<b.arduino?-1:a.arduino>b.arduino?1:0;
       });
       const stateData= await findAllNewData();
-      res.render("admin",{userData:userData,stateData:stateData,name:req.session.name});
+      var unregisteredArduino= await findAllUnregisteredArduino();
+      res.render("admin",{userData:userData,stateData:stateData,unregisteredArduino:unregisteredArduino,name:req.session.name});
   }else{
     res.redirect(url.format({
     pathname:"/admin/login",
@@ -45,7 +47,6 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/signUp", async (req, res, next) => {
-    //const datas = await Data.find({});
     res.render("adminSignUp",{err:null})
   });
 
@@ -110,8 +111,7 @@ router.post("/signUp",async(req,res,next) => {
       if(!queryResult){
         res.clearCookie('savedID');
         res.clearCookie('savedCheck');
-        res.render("adminLogin",{err:"아이디가 존재하지 않습니다.",saveID:req.cookies.savedID,saveCheck:req.cookies.savedCheck});
-        //res.send("<script>alert('아이디가 존재하지 않습니다.');window.location.href='/admin/login'</script>")
+        res.render("adminLogin",{err:"존재하지 않는 아이디입니다.",saveID:req.cookies.savedID,saveCheck:req.cookies.savedCheck});
       }else{
         const queryEmail=queryResult.email;
         const queryName=queryResult.name;
@@ -148,18 +148,7 @@ router.post("/signUp",async(req,res,next) => {
         }
       }
   });
-  /*
-  router.get("/logout",async(req,res,next)=>{
-    res.redirect(url.format({
-      pathname:"/admin/login",
-      query:{
-        err:null,
-        saveID:req.cookies.savedID,
-        saveCheck:req.cookies.savedCheck
-      }    
-    })) 
-  });
-  */
+  
   router.get("/logout",async(req,res,next)=>{
     if(req.session.isLogined){
       req.session.destroy(
@@ -203,7 +192,7 @@ router.post("/signUp",async(req,res,next) => {
       var queryString=urlParse.query;
       var user_id=queryString.user_id;
       var arduino_id=String(queryString.arduino_id);
-      result = await deregisterArduino(user_id,arduino_id);
+      await deregisterArduino(user_id,arduino_id);
       res.redirect("/admin");
     }else{
       res.redirect(url.format({
@@ -215,5 +204,41 @@ router.post("/signUp",async(req,res,next) => {
         }
       }))
     }
-  })
+  });
+
+  router.get("/register",async(req,res,next)=>{
+      if(req.session.isLogined){
+        var urlParse=url.parse(req.url,true);
+        var queryString=urlParse.query;
+        var arduino_id=queryString.arduino_id;
+        var user_id=queryString.user_id;
+        var user_name=queryString.user_name;
+        var allUser= await findAllUser();
+        //이미 가입된 사용자일시 사용자의 arduinos에 arduino_id 추가
+        for(let i=0;i<allUser.length;i++){
+          if(user_id==allUser[i].email){
+            await registerArduino(user_id,arduino_id);
+            res.redirect("/admin");    
+          }    
+        }
+        //가입되어 있지 않은 사용자일시 새로운 사용자를 추가
+        var newUserData={
+          user_id:user_id,
+          user_name:user_name,
+          user_password:bcrypt.hashSync('1234'),
+          arduinos: [arduino_id]
+        }
+        await saveUser(newUserData);
+        res.redirect("/admin");
+      }else{
+        res.redirect(url.format({
+          pathname:"/admin/login",
+          query:{
+            err:null,
+            saveID:req.cookies.savedID,
+            saveCheck:req.cookies.savedCheck
+          }
+        }))
+      }
+  });
 module.exports = router;

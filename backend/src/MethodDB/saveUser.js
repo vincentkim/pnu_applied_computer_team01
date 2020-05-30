@@ -58,6 +58,7 @@ module.exports=async function(userData){
     var queryData={...userData};
     queryData.tableName='user_info';
     queryData.email=userData.user_id;
+    queryData.name=userData.user_name;
     queryData.password=userData.user_password;
     const result=await insert(queryData);
     return new Promise(function(resolve,reject){

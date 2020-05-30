@@ -1,5 +1,6 @@
 const findOneUser=require('../MethodDB/findOneUser');
 const updateDB=require('../ManipulateDB/updateDB');
+//user_id를 가지는 가입된 사용자의 arduinos에서 arduino_id를 삭제
 module.exports=async function(user_id,arduino_id){
     var user_data=await findOneUser({user_id:user_id});
       var user_data_arduinos = user_data.arduinos;
