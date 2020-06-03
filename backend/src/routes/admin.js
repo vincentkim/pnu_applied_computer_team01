@@ -180,10 +180,21 @@ router.post("/signUp",async(req,res,next) => {
     }
   });
   router.get("/details",async(req,res,next)=>{
+    if(req.session.isLogined){
       var urlParse=url.parse(req.url,true);
       var queryString=urlParse.query;
       const arduinoData=await findAllData({arduino_id:String(queryString.id)});
       res.render("adminDetails",{data:arduinoData});
+    }else{
+      res.redirect(url.format({
+        pathname:"/admin/login",
+        query:{
+          err:null,
+          saveID:req.cookies.savedID,
+          saveCheck:req.cookies.savedCheck
+        }    
+      }));
+    }
   });
   
   router.get("/deregister",async(req,res,next)=>{

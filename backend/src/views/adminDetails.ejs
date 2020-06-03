@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/adminDetails.css" />
     <title>Arduino Details</title>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   </head>
   <body>
+        
         <div class="header">
             <span class="iconicfill-arrow-left" onclick="location.href='/admin'" style="cursor:pointer"></span>
             Arduino Id: <%=data[0].id%>
@@ -41,11 +44,197 @@
                 </table>
             </div>
             <hr width="1500px">
-            <div class="graph_section">
-                
+            <div class="graph_section" id="Line_Controls_Chart">
+                <!--라인 차트-->
+                <div id="lineChartArea" style="padding:0px 20px 0px 0px;"></div>
+                <!--컨트롤바-->
+                <div id="controlsArea" style="padding:0px 20px 0px 0px;"></div>
             </div>
         </center>    
   </body>
+  <script>
+    function getAvg(arr){
+        let result=0;
+        for(let i=0;i<arr.length;i++){
+            result+=arr[i];
+        }
+        return result / arr.length;
+    }
+    function dateParseByHour(str){
+        const year = str.substring(0,4);
+        const month = str.substring(5,7);
+        const day = str.substring(8,10);
+        const hour = str.substring(11,13);
+        return (new Date(year,month,day,hour)).getTime();
+    }
+    var chart={
+        
+        chartDraw:function(){
+            
+            var chartDateformat = 'yyyy년MM월dd일HH시';
+            var chartLineCount=10;
+            var controllLineCount=10;
+            
+            function drawDashboard(){
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('datetime','시간');
+                dataTable.addColumn('number','온도');
+                dataTable.addColumn('number','습도');
+                var dataRow=[];
+                var data= <%- JSON.stringify(data)%>;
+                var tempInHour=[];
+                var humidityInHour=[];
+                var currentHour = dateParseByHour(data[0].createdat);
+                //시간당 평균 값을 저장
+                for(let i=0;i<data.length;i++){
+                    var nextHour = dateParseByHour(data[i].createdat);
+                    if(currentHour==nextHour){
+                        if(data[i].temp){
+                            tempInHour.push(Number(data[i].temp));
+                        }else{
+                            tempInHour.push(0);
+                        }
+                        if(data[i].humidity){
+                            humidityInHour.push(Number(data[i].humidity));
+                        }else{
+                            humidityInHour.push(0);
+                        }
+                    }else{
+                        var time = new Date(currentHour);
+                        var tempAvg = getAvg(tempInHour);
+                        var humidityAvg = getAvg(humidityInHour);
+                        dataRow = [time,tempAvg,humidityAvg];
+                        dataTable.addRow(dataRow);
+                        //초기화
+                        tempInHour=[];
+                        humidityInHour=[];
+                        currentHour = nextHour;
+                        if(data[i].temp){
+                            tempInHour.push(Number(data[i].temp));
+                        }else{
+                            tempInHour.push(0);
+                        }
+                        if(data[i].humidity){
+                            humidityInHour.push(Number(data[i].humidity));
+                        }else{
+                            humidityInHour.push(0);
+                        }
+                    }
+                }
+                //마지막 요소는 위의 루프에서 추가되지 않으므로
+                var time = new Date(currentHour);
+                var tempAvg = getAvg(tempInHour);
+                var humidityAvg = getAvg(humidityInHour);
+                dataRow = [time,tempAvg,humidityAvg];
+                dataTable.addRow(dataRow);
+                var chart = new google.visualization.ChartWrapper({
+                    chartType : 'LineChart',
+                    containerId : 'lineChartArea', //라인 차트
+                    options : {
+                        isStacked : 'percent',
+                        focusTarget : 'category',
+                        height : 500,
+                        width : '100%',
+                        legend : {position:"top",textStyle:{fontSize:13}},
+                        pointSize : 5,
+                        tooltip : {textStyle : {fontSize:12}, showColorCode : true,trigger: 'both'},
+                        hAxis : {
+                            format:chartDateformat,
+                            gridlines:{
+                                count:chartLineCount,
+                                units:{
+                                    years: {format : ['yyyy년']},
+                                    months : {format: ['MM월']},
+                                    days : {format : ['dd일']},
+                                    hours : {format : ['HH시']}
+                                }
+                            },
+                            textStyle:{fontSize:12}
+                        },
+                        vAxis :{
+                            minValue: 100,
+                            viewWindow:{min:0},
+                            gridlines:{count:-1},
+                            textStyle:{fontSize:12}
+                        },
+                        animation : {
+                            startup: true,
+                            duration: 1000,
+                            easing: 'in' 
+                        },
+                        annotations : {
+                            pattern: chartDateformat,
+                            textStyle: {
+                                fontSize: 15,
+                                bold: true,
+                                italic: true,
+                                color: '#871b47',
+                                auraColor: '#d799ae',
+                                opacity: 0.8,
+                                pattern: chartDateformat
+                            }
+                        }
+                    }
+                });
+                var control = new google.visualization.ControlWrapper({
+                    controlType:'ChartRangeFilter',
+                    containerId: 'controlsArea', //컨트롤 바
+                    options: {
+                        ui:{
+                            chartType: 'LineChart',
+                            chartOptions: {
+                                chartArea:{'width':'60%','height':100},
+                                hAxis:{
+                                    'baselineColor':'none',
+                                    format:chartDateformat,
+                                    textStyle: {fontSize:12},
+                                    gridlines:{
+                                        count:controllLineCount,
+                                        units:{
+                                            years:{format:['yyyy년']},
+                                            months:{format:['MM월']},
+                                            days:{format:['dd일']},
+                                            hours:{format:['HH시']}
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        filterColumnIndex:0
+                    }
+                });
+
+                var date_formatter=new google.visualization.DateFormat({pattern:chartDateformat});
+
+                date_formatter.format(dataTable,0);
+                var dashboard= new google.visualization.Dashboard(document.getElementById('Line_Controls_Chart'));
+                window.addEventListener('resize',function(){
+                    dashboard.draw(dataTable);
+                },false); //화면 크기에 따라 그래프 크기 변경
+                dashboard.bind([control],[chart]);
+                dashboard.draw(dataTable);
+            }
+            google.charts.setOnLoadCallback(drawDashboard);
+
+        }
+    }
+    /*
+    window.onload() = function(){
+        google.charts.load('current',{'packages':['line','controls']});
+        chart.chartDraw();   
+    }
+    */
+    $(document).ready(function(){
+        google.charts.load('current',{'packages':['line','controls']});
+        chart.chartDraw();
+    });
+    
+/*
+    $(window).bind("pageshow",function(){
+        google.charts.load('current',{'packages':['line','controls']});
+        chart.chartDraw();
+    });*/
+</script>
 </html>
 
 
