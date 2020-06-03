@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import logo from "./logo.svg"; 
+import "./App.css"; 
 import { Form, Grid, Button, Checkbox, Segment } from "semantic-ui-react";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
