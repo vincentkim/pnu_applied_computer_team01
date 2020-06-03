@@ -30,7 +30,7 @@ const Login = () => {
     setLoading(true);
     setOnceCliekd(true);
     try {
-      const result = await axios.post(baseUrl + "/login", {
+      const result = await axios.post(baseUrl + "/user/login", {
         ID: email,
         PW: password,
       });

@@ -3,19 +3,16 @@ import React, { useState } from "react";
 import { Grid, Message, Form, Button, Icon, Header } from "semantic-ui-react";
 import axios from "axios";
 import { baseUrl } from "../Constants/contants";
-const ArduinoPost = () => {
+
+const ArduinoRegister = () => {
   const [onceClicked, setOnceClicked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [humidity, setHumidity] = useState("");
   const [arduinoId, setArduinoId] = useState("");
 
-  const onChangeHumidity = (e) => {
-    setHumidity(e.target.value);
-  };
   const onChangeArduinoId = (e) => {
     setArduinoId(e.target.value);
   };
-  const onSumbitHumidity = async (e) => {
+  const onSumbit = async (e) => {
     console.log("Clicked");
     setOnceClicked(true);
     e.preventDefault();
@@ -24,12 +21,9 @@ const ArduinoPost = () => {
       setLoading(false);
     }, 2000);
     const arduinoIdTest = "1";
-    const result = await axios.post(baseUrl + "/arduino/data/" + arduinoId, {
-      humidity,
-      // arduinoId:ar,
+    const result = await axios.post(baseUrl + "/arduino/register/", {
+      arduino_Id: arduinoId,
     });
-    console.log("send humidity", result);
-    setHumidity("");
     setArduinoId("");
   };
   let message = "";
@@ -56,23 +50,12 @@ const ArduinoPost = () => {
   }
   return (
     <>
-      <Header as="h2" icon color="orange" textAlign="center">
-        <Icon name="send" color="orange" />
-        Send Arduino Value for testing
+      <Header as="h2" icon color="violet" textAlign="center">
+        <Icon name="code" color="violet" />
+        Register Arduino
       </Header>
 
-      <Form
-        style={{ maxWidth: 450, marginTop: 30 }}
-        onSubmit={onSumbitHumidity}
-      >
-        <Form.Field>
-          <label>Humidity...</label>
-          <input
-            placeholder="Humidity......"
-            value={humidity}
-            onChange={onChangeHumidity}
-          />
-        </Form.Field>
+      <Form style={{ maxWidth: 450, marginTop: 30 }} onSubmit={onSumbit}>
         <Form.Field>
           <label>Arduino Id ...</label>
           <input
@@ -81,9 +64,9 @@ const ArduinoPost = () => {
             onChange={onChangeArduinoId}
           />
         </Form.Field>
-        <Button disabled={loading} color="orange" type="submit">
+        <Button disabled={loading} color="violet" type="submit">
           <Icon name="sign-in" />
-          Send Arduino Value
+          Register Arduino Id
         </Button>
       </Form>
       {message}
@@ -91,4 +74,4 @@ const ArduinoPost = () => {
   );
 };
 
-export default ArduinoPost;
+export default ArduinoRegister;

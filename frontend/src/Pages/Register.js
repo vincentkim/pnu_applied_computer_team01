@@ -34,7 +34,7 @@ const Register = () => {
     setLoading(true);
     setOnceClicked(true);
     e.preventDefault();
-    const result = await axios.post(baseUrl + "/register", {
+    const result = await axios.post(baseUrl + "/user/register", {
       ID: email,
       PW: password,
       CONFIRMPW: confirmPassword,
