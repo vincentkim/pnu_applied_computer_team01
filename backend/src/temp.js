@@ -1,7 +1,8 @@
-const doSomething=require('./MethodDB/findOneUser');
+const doSomething=require('./MethodDB/findAllUser');
 async function test(){
-    const result=await doSomething({user_id:'aaa@gmail.com'});
+    const result=await doSomething();
     console.log(result);
 }
 
 test();
+

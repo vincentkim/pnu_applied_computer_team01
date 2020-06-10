@@ -188,8 +188,8 @@
                     var renewal_time=Date.parse(stateData[i].createdat);
                     var now = new Date();
                     var gap=now.getTime()-renewal_time;
-                    var min_gap=gap/1000/60;
-                    var isOff=(min_gap>=10);
+                    var sec_gap=gap/1000;
+                    var isOff=(sec_gap>=30);
                     if(isOff){
                 %>
                         Off

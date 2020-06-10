@@ -3,7 +3,7 @@ const router = express.Router();
 const insert=require("../ManipulateDB/insertDB");
 const query=require("../ManipulateDB/queryDB");
 const update=require("../ManipulateDB/updateDB");
-const bcrypt=require('bcryptjs');  //모듈 설치
+const bcrypt=require('bcryptjs');  
 const url=require('url');
 const server=require('server');
 const findAllUser=require('../MethodDB/findAllUser');
@@ -13,6 +13,8 @@ const deregisterArduino=require('../MethodDB/deregisterArduino');
 const findAllUnregisteredArduino=require('../MethodDB/findAllUnregisteredArduino');
 const registerArduino=require('../MethodDB/registerArduino');
 const saveUser=require('../MethodDB/saveUser');
+const nodemailer=require('nodemailer');
+const adminCodeNow='1111'; //임시적 admin code
 
 router.get("/", async (req, res, next) => {
   
@@ -36,14 +38,8 @@ router.get("/", async (req, res, next) => {
       var unregisteredArduino= await findAllUnregisteredArduino();
       res.render("admin",{userData:userData,stateData:stateData,unregisteredArduino:unregisteredArduino,name:req.session.name});
   }else{
-    res.redirect(url.format({
-    pathname:"/admin/login",
-    query:{
-      err:null,
-      saveID:req.cookies.savedID,
-      saveCheck:req.cookies.savedCheck
-    }    
-  }))}
+    res.redirect("/admin/login");
+  }
 });
 
 router.get("/signUp", async (req, res, next) => {
@@ -52,7 +48,7 @@ router.get("/signUp", async (req, res, next) => {
 
 router.post("/signUp",async(req,res,next) => {
     let body=req.body;
-    const adminCodeNow='1111'; //임시적 admin code
+    
     const email= body.id;
     const name=body.name;
     const password=body.password;
@@ -157,26 +153,12 @@ router.post("/signUp",async(req,res,next) => {
             console.log(err);
             return;
           }
-          res.redirect(url.format({
-            pathname:"/admin/login",
-            query:{
-              err:null,
-              saveID:req.cookies.savedID,
-              saveCheck:req.cookies.savedCheck
-            }
-          }));
+          res.redirect("/admin/login");
         }
       );
     }else{
         console.log("error: 로그인이 되지 않은 상태에서 로그아웃 실행");
-        res.redirect(url.format({
-          pathname:"/admin/login",
-          query:{
-            err:null,
-            saveID:req.cookies.savedID,
-            saveCheck:req.cookies.savedCheck
-          }
-        }));
+        res.redirect("/admin/login");
     }
   });
   router.get("/details",async(req,res,next)=>{
@@ -186,14 +168,7 @@ router.post("/signUp",async(req,res,next) => {
       const arduinoData=await findAllData({arduino_id:String(queryString.id)});
       res.render("adminDetails",{data:arduinoData});
     }else{
-      res.redirect(url.format({
-        pathname:"/admin/login",
-        query:{
-          err:null,
-          saveID:req.cookies.savedID,
-          saveCheck:req.cookies.savedCheck
-        }    
-      }));
+      res.redirect("/admin/login");
     }
   });
   
@@ -206,14 +181,7 @@ router.post("/signUp",async(req,res,next) => {
       await deregisterArduino(user_id,arduino_id);
       res.redirect("/admin");
     }else{
-      res.redirect(url.format({
-        pathname:"/admin/login",
-        query:{
-          err:null,
-          saveID:req.cookies.savedID,
-          saveCheck:req.cookies.savedCheck
-        }
-      }))
+      res.redirect("/admin/login");
     }
   });
 
@@ -242,14 +210,89 @@ router.post("/signUp",async(req,res,next) => {
         await saveUser(newUserData);
         res.redirect("/admin");
       }else{
-        res.redirect(url.format({
-          pathname:"/admin/login",
-          query:{
-            err:null,
-            saveID:req.cookies.savedID,
-            saveCheck:req.cookies.savedCheck
-          }
-        }))
+        res.redirect("/admin/login");
       }
   });
+
+  router.get("/resetPW",async(req,res,next)=>{
+    res.render("adminResetPW");
+  });
+
+  router.post("/resetPW",async(req,res,next)=>{
+    let body=req.body;
+  
+    const email= body.id;
+    const adminCode=body.adminCode;
+
+    if(adminCode!=adminCodeNow){
+      res.send("<script>alert('Admin code가 일치하지 않습니다.');window.location.href='/admin/resetPW'</script>");
+      return;
+    }
+    const queryData={
+      tableName:'admin_info',
+      email:email
+    };
+    const queryResult=await query(queryData);
+    if(!queryResult){
+      res.send("<script>alert('존재하지 않는 이메일입니다.');window.location.href='/admin/resetPW'</script>");
+      return;
+    }
+    const token = Math.floor(Math.random()*(999999-100000))+100000; //100000~999999까지 랜덤 값
+    //var testAccount = await nodemailer.createTestAccount();
+    var transporter = nodemailer.createTransport({
+        service:'gmail',
+        port:465,
+        secure:true,
+        auth:{
+          user:'shwanh0918@gmail.com',
+          pass:'number0918^^'
+        }
+    });
+    var emailOptions={
+      from:"admin@noreply.com",
+      to:email,
+      subject:"비밀번호 초기화 인증번호",
+      html: '비밀번호 초기화를 위해 다음의 인증번호를 입력해주세요.<h3 style="color:red">'+token+'</h3>' 
+    };
+    await transporter.sendMail(emailOptions);
+    res.redirect(url.format({
+      pathname:"/admin/resetPW/Checked",
+      query:{
+        email:email,
+        token:bcrypt.hashSync(email+token)
+      }
+    }));
+  })
+
+  router.get("/resetPW/Checked",async(req,res,next)=>{
+    var urlParse=url.parse(req.url,true);
+    var queryString=urlParse.query;
+    var email=queryString.email;
+    var token=queryString.token;
+    if(!email||!token){
+      res.render("adminResetPWChecked",{validity:'unvalid',err:null})
+    }else{
+      email=email.replace("%40","@");
+      res.render("adminResetPWChecked",{validity:'valid',err:null,email:email,token:token});
+    }
+  })
+
+  router.post("/resetPW/Checked",async(req,res,next)=>{
+    var body = req.body;
+    var insertedPassword= body.password;
+    var insertedPasswordCheck=body.passwordCheck;
+    var insertedVerificationCode=body.verificationCode;
+    var email = body.email;
+    var token = body.token;
+
+    if(insertedPassword!=insertedPasswordCheck){
+      res.render("adminResetPWChecked",{validity:'valid',err:'비밀번호와 비밀번호 확인이 일치하지 않습니다.'});
+    }
+    if(!bcrypt.compareSync(email+insertedVerificationCode,token)){
+      res.render("adminResetPWChecked",{validity:'valid',err:'인증번호가 일치하지 않습니다.'});
+    }
+    var adminInfo = await query({tableName:"admin_info",email:email});
+    await update({tableName:"admin_info",email:email,name:adminInfo.name,password:bcrypt.hashSync(insertedPassword)});
+    res.send("<script>alert('비밀번호 변경이 완료되었습니다.');window.location.href='/admin/login'</script>");
+  })
 module.exports = router;

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/adminResetPW.css" />
+    <title>Reset Password</title>
+</head>
+<body class="align">
+    <div class="site__container">
+
+        <div class="grid__container">
+            
+          <form action="/admin/resetPW" method="post" class="form form--resetPW">
+            <div class="form__header">
+                <h1>Reset Password</h1>
+                    <div class="form__subHeader">
+                        <h2>-Check ID-</h2>
+                    </div>
+            </div>
+            <div class="form__field">
+              <label class="fontawesome-user" for="resetPW__username"><span class="hidden">Username</span></label>
+              <input name="id" id="resetPW__username" type="email" class="form__input" placeholder="your_email@gmail.com" required >
+            </div>
+            <div class="form__field">
+                <label class="fontawesome-star" for="resetPW__adminCode"><span class="hidden">adminCode</span></label>
+                <input name="adminCode" id="resetPW__adminCode" type="password" class="form__input" placeholder="Insert Our Admin code" required>
+            </div>
+            <div class="form__field">
+              <input type="submit" value="Submit">
+            </div>
+    
+          </form>
+    
+        </div>
+    
+      </div>
+    
+    
+</body>
