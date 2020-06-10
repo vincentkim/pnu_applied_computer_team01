@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import logo from "./logo.svg"; 
-import "./App.css"; 
+import "./App.css";  
 import { Form, Grid, Button, Checkbox, Segment } from "semantic-ui-react";
-import Login from "./Pages/Login";
+import Login from "./Pages/Login"; 
 import Register from "./Pages/Register";
 import ArduinoPost from "./Pages/ArduinoPost";
 import Dummy from "./Pages/Dummy";
 import SidePanel from "./Pages/SidePanel";
 
 function App() {
-  return (
+  return ( 
     <>
       <div className="app">
         <SidePanel />
@@ -17,10 +17,10 @@ function App() {
           stackable
           celled
           verticalAlign="middle"
-          container
-          centered
+          container 
+          centered 
           columns={2}
-          divided
+          divided 
           textAlign="center"
         >
           <Grid.Row>

@@ -3,10 +3,10 @@ import { Grid, Message, Form, Button, Icon, Header } from "semantic-ui-react";
 import axios from "axios";
 import { baseUrl } from "../Constants/contants";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+const Login = () => { 
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState(""); 
+  const [loading, setLoading] = useState(false); 
   const [onceClicked, setOnceCliekd] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [resultData, setResultData] = useState(null);
@@ -34,15 +34,15 @@ const Login = () => {
         ID: email,
         PW: password,
       });
-      console.log(result.data);
+      console.log(result.data); 
       setEmail("");
       setPassword("");
       setLoading(false);
       setResultData(result.data);
     } catch (e) {
-      setEmail("");
+      setEmail(""); 
       setPassword("");
-      setLoading(false);
+      setLoading(false); 
       setLoginError(true);
     }
   };

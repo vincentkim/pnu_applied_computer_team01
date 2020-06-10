@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import {
   Sidebar,
   Segment,
-  Menu,
-  Button,
-  Checkbox,
+  Menu, 
+  Button, 
+  Checkbox, 
   Label,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ const SidePanel = (props) => {
       <Segment>
         <Checkbox
           label={
-            <Label color="teal" onClick={onClick}>
+            <Label color="teal" onClick={onClick}> 
               Sidebar Open{" "}
             </Label>
           }
@@ -66,7 +66,7 @@ const SidePanel = (props) => {
         <Menu.Item>
           <Button as="a" color="teal" icon="signup">
             <Link to="arduino-unregister" style={{ color: "white" }}>
-              미등록 아두이노 조회
+              미등록 아두이노 조회 
             </Link>
           </Button>
         </Menu.Item>
