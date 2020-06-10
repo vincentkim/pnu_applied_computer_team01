@@ -4,28 +4,32 @@ import { baseUrl } from "../Constants/contants";
 import axios from "axios";
 
 const UnregistereArdList = (props) => {
-  const [ardList, setArdList] = useState([]);
-  const [userList, setUserList] = useState([]);
+
+  const [ardList, setArdList] = useState([]); 
+  const [userList, setUserList] = useState([]); 
   const [currentArduino, setCurrentArduino] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); 
   useEffect(() => {
+
     const fetchData = async () => {
       const ardList = await axios.get(baseUrl + "/arduino/unregistered");
       const userList = await axios.get(baseUrl + "/user/");
       if (ardList && ardList.data) {
         console.log("ardlist", ardList.data.ardList);
         setArdList(ardList.data.ardList);
+        // setArdList(ardList.data.ardList);
       }
       if (userList && userList.data) {
         setUserList(userList.data.userList);
+        //setUserList(userList.data.userList);
       }
     };
     fetchData();
   }, []);
   const connect = async (e) => {
-    console.log("connect btn clicked");
+    // console.log("connect btn clicked");
     if (!currentArduino && !currentUser) {
-      console.log("select 해야지");
+      // console.log("select 해야지");
       return;
     }
     const result = await axios.post(baseUrl + "/phone/connect", {

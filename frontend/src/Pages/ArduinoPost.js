@@ -16,7 +16,7 @@ const ArduinoPost = () => {
     setArduinoId(e.target.value);
   };
   const onSumbitHumidity = async (e) => {
-    console.log("Clicked");
+    // console.log("Clicked");
     setOnceClicked(true);
     e.preventDefault();
     setLoading(true);
@@ -28,7 +28,7 @@ const ArduinoPost = () => {
       humidity,
       // arduinoId:ar,
     });
-    console.log("send humidity", result);
+    // console.log("send humidity", result);
     setHumidity("");
     setArduinoId("");
   };
@@ -48,6 +48,7 @@ const ArduinoPost = () => {
       <Message icon positive>
         <Icon name="circle outline" />
         <Message.Content>
+
           <Message.Header>Success</Message.Header>
           <p>Saved your data</p>
         </Message.Content>
@@ -75,6 +76,7 @@ const ArduinoPost = () => {
         </Form.Field>
         <Form.Field>
           <label>Arduino Id ...</label>
+          
           <input
             placeholder="Arduino Id......"
             value={arduinoId}

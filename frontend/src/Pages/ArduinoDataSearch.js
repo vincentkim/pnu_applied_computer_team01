@@ -26,7 +26,7 @@ const ArduinoDataSearch = (props) => {
         <Grid.Row>
           <Header
             as="h2"
-            content="Sample Data... ID는 1,2에 데이터 저장했습니다"
+            content="Sample Data... ID는 1,2에 데이터 저장했습니다."
             color="red"
             inverted
           />
@@ -36,7 +36,7 @@ const ArduinoDataSearch = (props) => {
             value={arduinoId}
             onChange={onChange}
             label="Arduino Id"
-            placeholder="Place Arduino Id..."
+            placeholder="Place Arduino Id..sada."
           />
           <Button icon="search" size="medium" onClick={onClick} />
         </Grid.Row>
@@ -46,6 +46,7 @@ const ArduinoDataSearch = (props) => {
               {datas &&
                 datas.length > 0 &&
                 datas.map((data) => (
+
                   <Card color="orange">
                     <Card.Content>
                       <Card.Header>Humidity : {data.humidity}</Card.Header>
@@ -59,4 +60,4 @@ const ArduinoDataSearch = (props) => {
     </>
   );
 };
-export default ArduinoDataSearch;
+export default ArduinoDataSearch; 
