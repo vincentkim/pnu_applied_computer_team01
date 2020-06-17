@@ -5,8 +5,8 @@ async function insert(data){
     return new Promise(function(resolve,reject){
         client.query(insertText,(err,res)=>{
             if(err){
-                console.log(err)
-                resolve(false);
+                console.log(err);
+                resolve(err);
             }else{
                 console.log("data is inserted successfully.")
                 resolve(true);

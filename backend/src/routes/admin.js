@@ -61,14 +61,6 @@ router.post("/signUp",async(req,res,next) => {
     if(adminCode!=adminCodeNow){
       res.send("<script>alert('Admin code가 일치하지 않습니다.');window.location.href='/admin/signUp'</script>");
     }
-    const queryData={
-      tableName:'admin_info',
-      email:email
-    }
-    const queryResult=await query(queryData);
-    if(queryResult){
-      res.send("<script>alert('이미 존재하는 이메일입니다.');window.location.href='/admin/signUp'</script>");
-    }
     hashedPassword=bcrypt.hashSync(password); 
     if(hashedPassword){
       const insertData={
@@ -77,8 +69,12 @@ router.post("/signUp",async(req,res,next) => {
         name:name,
         password:hashedPassword
       };
-      await insert(insertData);
-      res.send("<script>alert('성공적으로 가입되었습니다.');window.location.href='/admin/login'</script>");
+      var result = await insert(insertData);
+      if(result.constraint=='admin_info_pkey'){
+        res.send("<script>alert('이미 존재하는 이메일입니다.');window.location.href='/admin/signUp'</script>");
+      }else{
+        res.send("<script>alert('성공적으로 가입되었습니다.');window.location.href='/admin/login'</script>");
+      }
     }
 });
 

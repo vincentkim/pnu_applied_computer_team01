@@ -62,6 +62,14 @@ module.exports=async function(userData){
     queryData.password=userData.user_password;
     const result=await insert(queryData);
     return new Promise(function(resolve,reject){
-        resolve(result);
+        if(result =='nonexistent id'){
+            console.error("존재하지 않는 arduino id를 가지고 있습니다.")
+            resolve(false);
+        }else if(result == 'already registered id'){
+            console.error("이미 등록되어 있는 arduino id를 가지고 있습니다.")
+            resolve(false);
+        }else{
+            resolve(result);
+        }
     });
 }
