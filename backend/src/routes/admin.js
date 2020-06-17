@@ -32,7 +32,7 @@ router.get("/", async (req, res, next) => {
         }
       }
       userData.sort(function(a,b){
-        return a.arduino<b.arduino?-1:a.arduino>b.arduino?1:0;
+        return Number.parseInt(a.arduino)<Number.parseInt(b.arduino)?-1:Number.parseInt(a.arduino)>Number.parseInt(b.arduino)?1:0;
       });
       const stateData= await findAllNewData();
       var unregisteredArduino= await findAllUnregisteredArduino();
