@@ -9,17 +9,18 @@ const UserList = (props) => {
       <div className="app">
         <SidePanel />
         <Grid
-          stackable 
-          celled 
-          verticalAlign="middle"
-          container 
-          centered 
-          columns={2}
-          divided 
-          textAlign="center" 
+           stackable 
+           celled 
+           verticalAlign="middle"
+           container 
+           centered 
+           columns={2}
+           divided 
+           textAlign="center" 
         >
           <Grid.Row>
             <Grid.Column>
+              
               <User /> 
             </Grid.Column> 
           </Grid.Row> 
