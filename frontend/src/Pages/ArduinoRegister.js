@@ -4,6 +4,7 @@ import { Grid, Message, Form, Button, Icon, Header } from "semantic-ui-react";
 import axios from "axios";
 import { baseUrl } from "../Constants/contants";
 
+// 아두이노 등록
 const ArduinoRegister = () => {
   const [onceClicked, setOnceClicked] = useState(false);
   const [loading, setLoading] = useState(false);

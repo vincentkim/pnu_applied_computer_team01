@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Grid, Message, Form, Button, Icon, Header } from "semantic-ui-react";
 import axios from "axios";
 import { baseUrl } from "../Constants/contants";
+// 아두이노 데이터 전송
 const ArduinoPost = () => {
   const [onceClicked, setOnceClicked] = useState(false);
   const [loading, setLoading] = useState(false);

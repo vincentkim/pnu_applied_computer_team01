@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Grid, Message, Form, Button, Icon, Header } from "semantic-ui-react";
 import axios from "axios";
 
+// 안쓰는 거
 const Dummy = () => {
   return (
     <>

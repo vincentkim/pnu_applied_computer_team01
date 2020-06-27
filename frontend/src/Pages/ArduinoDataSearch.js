@@ -3,6 +3,7 @@ import { Grid, Card, Input, Button, Header } from "semantic-ui-react";
 import { baseUrl } from "../Constants/contants";
 import axios from "axios";
 
+// ArduinoDataSearch 아두이노 데이터 검색
 const ArduinoDataSearch = (props) => {
   const [datas, setDatas] = useState([]);
   const [arduinoId, setArduinoId] = useState("");

@@ -9,6 +9,7 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+// 왼쪽 사이드바 기능
 const SidePanel = (props) => {
   const [visible, setVisible] = useState(true);
   const onClick = (e) => {

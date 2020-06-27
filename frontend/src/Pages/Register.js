@@ -3,6 +3,7 @@ import { Header, Grid, Form, Button, Icon, Message } from "semantic-ui-react";
 import axios from "axios";
 import { baseUrl } from "../Constants/contants";
 
+// 회원가입
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
